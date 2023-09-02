@@ -1,0 +1,44 @@
+import java.util.*;
+import java.io.*;//input output process
+import java.net.*; //network related process
+class ServerChat
+{
+public static void main(String a[])
+{
+String ip; 
+ ServerSocket ss;//accepting request from client;
+  Socket c;//interacting with client
+  BufferedReader input;
+  PrintStream ps;
+  try 
+{	
+ ss=new ServerSocket(4444);
+	 System.out.println("server started");
+	 System.out.println("Waiting for the client");
+	 c=ss.accept();
+while(true)
+{
+ps=new PrintStream(c.getOutputStream());
+input=new BufferedReader(new InputStreamReader(c.getInputStream()));
+ip=input.readLine();
+System.out.println("Client Message"+ip);
+if(ip.equalsIgnoreCase("bye"))
+{
+ps.println("Bye");
+break;
+}
+System.out.println("Enter the Server message");
+input=new BufferedReader(new InputStreamReader(System.in));
+ip=input.readLine();
+
+ps.println(ip);
+}
+
+ss.close();
+c.close();
+ ps.close();        
+      }	
+ catch(IOException i)
+{
+  System.out.println(i);
+}}}
